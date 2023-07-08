@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,11 +9,13 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     public float input;
     public SpriteRenderer playerSprite;
+     
+    Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
         {
             playerSprite.flipX = true;
         }
+
+        anim.SetFloat("Speed", Mathf.Abs(input));
     }
 
     void FixedUpdate()
