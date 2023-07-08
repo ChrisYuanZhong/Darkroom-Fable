@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 // The game scene is a roll film, so we will put all the components into the first frame and let them generate themselves after each length of the roll film block.
 public class SceneComponentAutoGen : MonoBehaviour
 {
-    public float frameLength = 3.75f;
+    public float frameLength = 2.4f;
     
     private List<GameObject> generatedGameObjects = new List<GameObject>();
 
