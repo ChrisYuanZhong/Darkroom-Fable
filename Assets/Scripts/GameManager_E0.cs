@@ -19,7 +19,7 @@ public struct ScriptPerFrame
 
 public class GameManager_E0 : MonoBehaviour
 {
-    public int totalFrames = 16;
+    public int totalFrames = 8;
     public int currentFrame = 0;
     public float frameLength = 2.4f;
 
@@ -30,13 +30,6 @@ public class GameManager_E0 : MonoBehaviour
 
     public static List<ScriptPerFrame> alwaysOnScripts = new List<ScriptPerFrame>()
     {
-        new ScriptPerFrame(true, 0, 0),
-        new ScriptPerFrame(true, 0, 0),
-        new ScriptPerFrame(true, 0, 0),
-        new ScriptPerFrame(true, 0, 0),
-        new ScriptPerFrame(true, 0, 0),
-        new ScriptPerFrame(true, 0, 0),
-        new ScriptPerFrame(true, 0, 0),
         new ScriptPerFrame(true, 0, 0),
         new ScriptPerFrame(true, 0, 0),
         new ScriptPerFrame(true, 0, 0),

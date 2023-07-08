@@ -26,11 +26,12 @@ public class RightTrigger : MonoBehaviour
             if (other.gameObject.GetComponent<PlayerMovement>().isShifting)
             {
                 other.gameObject.GetComponent<PlayerMovement>().isInTwoTriggers = true;
-            }else
+            }
+            else
             {
-                other.gameObject.GetComponent<PlayerMovement>().isShifting = true;
                 if (gameManager.currentFrame < gameManager.totalFrames - 1)
                 {
+                    other.gameObject.GetComponent<PlayerMovement>().isShifting = true;
                     gameManager.MoveRight();
                 }
             }

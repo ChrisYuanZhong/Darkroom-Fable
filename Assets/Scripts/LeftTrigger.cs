@@ -29,9 +29,9 @@ public class LeftTrigger : MonoBehaviour
             }
             else
             {
-                other.gameObject.GetComponent<PlayerMovement>().isShifting = true;
                 if (gameManager.currentFrame > 0)
                 {
+                    other.gameObject.GetComponent<PlayerMovement>().isShifting = true;
                     gameManager.MoveLeft();
                 }
             }
