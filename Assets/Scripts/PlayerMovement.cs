@@ -5,6 +5,9 @@ using System.Diagnostics;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool holdingPaper = false;
+    public bool holdingPlunger = false;
+
     public Rigidbody2D playerRb;
     public float speed = 5f;
     public float input;

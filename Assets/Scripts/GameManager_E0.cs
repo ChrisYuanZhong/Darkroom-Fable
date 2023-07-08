@@ -19,6 +19,7 @@ public struct ScriptPerFrame
 
 public class GameManager_E0 : MonoBehaviour
 {
+
     public int totalFrames = 8;
     public int currentFrame = 0;
     public float frameLength = 2.4f;
@@ -79,6 +80,10 @@ public class GameManager_E0 : MonoBehaviour
     {
         currentFrame++;
         mainCamera.GetComponent<CameraMovement>().MoveCamera(mainCamera.transform.position, new Vector3(mainCamera.transform.position.x + frameLength, mainCamera.transform.position.y, mainCamera.transform.position.z), 0.5f);
+
+        // Faliure animation
+        //if (currentFrame == totalFrames)
+            //animator.Failure();
 
         //floor.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(alwaysOnScripts, frameLength, currentFrame);
         //backGround.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(alwaysOnScripts, frameLength, currentFrame);
