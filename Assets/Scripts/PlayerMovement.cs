@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     public float input;
     public SpriteRenderer playerSprite;
+
+    public bool isShifting = false;
+    public bool isInTwoTriggers = false;
      
     Animator anim;
 
@@ -21,7 +24,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        input = Input.GetAxisRaw("Horizontal");
+        if (!isShifting)
+        {
+            input = Input.GetAxisRaw("Horizontal");
+        }
+
         if (input > 0)
         {
             playerSprite.flipX = false;
