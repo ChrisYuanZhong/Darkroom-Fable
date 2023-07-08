@@ -43,9 +43,15 @@ public class RightTrigger : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<PlayerMovement>().isInTwoTriggers == true)
         {
             collision.gameObject.GetComponent<PlayerMovement>().isInTwoTriggers = false;
-        }else if (collision.gameObject.CompareTag("Player"))
+        }
+        else if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerMovement>().isShifting = false;
+
+            if (gameManager.currentFrame == gameManager.totalFrames - 1)
+            {
+                gameManager.Death();
+            }
         }
     }
 }
