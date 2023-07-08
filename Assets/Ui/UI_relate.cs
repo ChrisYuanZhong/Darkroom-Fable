@@ -22,4 +22,9 @@ public class UI_relate : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
+    public void Click_exit()
+    {
+        Application.Quit();
+    }
+
 }
