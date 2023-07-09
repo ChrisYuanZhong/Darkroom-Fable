@@ -31,14 +31,14 @@ public class GameManager_E0 : MonoBehaviour
     private Sprite background4Original;
     public Sprite background4WithPlunger;
 
-    public GameObject anim_success;
     public GameObject anim_success1;
+    public GameObject anim_success2;
     public GameObject anim_failed;
 
     public int totalFrames = 8;
     public int currentFrame = 0;
     public float frameLength = 2.4f;
-
+    public bool ended = false;
 
 
     //public GameObject leftTrigger;
@@ -84,7 +84,14 @@ public class GameManager_E0 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+        {
+            if (ended)
+            {
+                // Back to main menu
 
+            }
+        }
     }
 
     // Move the camera smoothly using Lerp.
@@ -110,6 +117,8 @@ public class GameManager_E0 : MonoBehaviour
 
     public void PickUpToiletPaper()
     {
+        if (player.GetComponent<PlayerMovement>().holdingPaper)
+            return;
         toiletPaper.GetComponent<SceneComponentAutoGen>().DestroyFollowingFrames(currentFrame);
         player.GetComponent<PlayerMovement>().holdingPaper = true;
 
@@ -121,7 +130,6 @@ public class GameManager_E0 : MonoBehaviour
     {
         if (player.GetComponent<PlayerMovement>().holdingPaper)
         {
-            player.GetComponent<PlayerMovement>().holdingPaper = false;
             Destroy(hand);
             background3.sprite = background3NoHand;
             background4.sprite = background4WithPlunger;
@@ -151,12 +159,15 @@ public class GameManager_E0 : MonoBehaviour
         {
             ghost.GetComponent<SceneComponentAutoGen>().DestroyFollowingFrames(currentFrame);
 
-            
+
             // The End
-            anim_success.gameObject.SetActive(true);
-            anim_success1.gameObject.SetActive(true);
-            //¾È¾È
+            if (currentFrame == 0)
+                anim_success1.gameObject.SetActive(true);
+            else if (currentFrame == 1)
+                anim_success2.gameObject.SetActive(true);
+
             Destroy(player);
+            ended = true;
 
         }
     }
@@ -166,5 +177,6 @@ public class GameManager_E0 : MonoBehaviour
         //animator.Failure();
         anim_failed.gameObject.SetActive(true); 
         Destroy(player);
+        ended = true;
     }
 }
