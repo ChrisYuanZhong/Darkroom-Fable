@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isShifting = false;
     public bool isInTwoTriggers = false;
      
-    Animator anim;
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()

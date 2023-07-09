@@ -5,7 +5,6 @@ using UnityEngine;
 public class LeftTrigger : MonoBehaviour
 {
     public GameManager_E0 gameManager;
-    public BoxCollider2D boxCollider2D;
 
     // Start is called before the first frame update
     void Start()
