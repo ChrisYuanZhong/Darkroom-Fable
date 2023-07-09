@@ -31,9 +31,14 @@ public class GameManager_E0 : MonoBehaviour
     private Sprite background4Original;
     public Sprite background4WithPlunger;
 
+    public GameObject anim_success;
+    public GameObject anim_success1;
+    public GameObject anim_failed;
+
     public int totalFrames = 8;
     public int currentFrame = 0;
     public float frameLength = 2.4f;
+
 
 
     //public GameObject leftTrigger;
@@ -109,7 +114,7 @@ public class GameManager_E0 : MonoBehaviour
         player.GetComponent<PlayerMovement>().holdingPaper = true;
 
         // Change posture to holding paper
-        player.GetComponent<PlayerMovement>().anim.SetTrigger("PickUpPaper");
+        player.GetComponent<PlayerMovement>().anim.SetBool("withTissue", true);
     }
 
     public void GiveToiletPaper()
@@ -123,6 +128,7 @@ public class GameManager_E0 : MonoBehaviour
         }
 
         // Change posture to normal
+        player.GetComponent<PlayerMovement>().anim.SetBool("withTissue", false);
 
     }
 
@@ -135,7 +141,7 @@ public class GameManager_E0 : MonoBehaviour
             background4.sprite = background4Original;
 
             // Change posture to holding plunger
-
+            player.GetComponent<PlayerMovement>().anim.SetBool("withPlunge", true);
         }
     }
 
@@ -145,7 +151,11 @@ public class GameManager_E0 : MonoBehaviour
         {
             ghost.GetComponent<SceneComponentAutoGen>().DestroyFollowingFrames(currentFrame);
 
+            
             // The End
+            anim_success.gameObject.SetActive(true);
+            anim_success1.gameObject.SetActive(true);
+            //¾È¾È
             Destroy(player);
 
         }
@@ -154,6 +164,7 @@ public class GameManager_E0 : MonoBehaviour
     public void Death()
     {
         //animator.Failure();
+        anim_failed.gameObject.SetActive(true); 
         Destroy(player);
     }
 }
