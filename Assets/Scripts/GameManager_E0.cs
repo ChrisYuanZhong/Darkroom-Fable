@@ -31,6 +31,7 @@ public class GameManager_E0 : MonoBehaviour
     private Sprite background4Original;
     public Sprite background4WithPlunger;
 
+    public GameObject bubbleWithShit;
     public GameObject anim_success1;
     public GameObject anim_success2;
     public GameObject anim_failed;
@@ -73,6 +74,9 @@ public class GameManager_E0 : MonoBehaviour
     {
         background4Original = background4.sprite;
 
+        Destroy(bubbleWithShit, 2f);
+        Invoke("EnableInput", 2f);
+
         //leftTrigger.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(alwaysOnScripts, frameLength, 1);
         //rightTrigger.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(alwaysOnScripts, frameLength, 1);
         //floor.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(floorScripts, frameLength, 1);
@@ -96,6 +100,10 @@ public class GameManager_E0 : MonoBehaviour
 
     // Move the camera smoothly using Lerp.
 
+    public void EnableInput()
+    {
+        player.GetComponent<PlayerMovement>().enabled = true;
+    }
 
     public void MoveLeft()
     {
