@@ -4,6 +4,8 @@ using System.IO;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Windows;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public struct ScriptPerFrame
 {
@@ -35,6 +37,9 @@ public class GameManager_E0 : MonoBehaviour
     public GameObject anim_success1;
     public GameObject anim_success2;
     public GameObject anim_failed;
+
+    public GameObject tip_paper;
+    public GameObject tip_plunge;
 
     public int totalFrames = 8;
     public int currentFrame = 0;
@@ -90,9 +95,10 @@ public class GameManager_E0 : MonoBehaviour
     {
         if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
         {
-            if (ended)
+            if (ended=true)
             {
                 // Back to main menu
+                SceneManager.LoadScene("Ningxuan_tes");
 
             }
         }
@@ -132,6 +138,9 @@ public class GameManager_E0 : MonoBehaviour
 
         // Change posture to holding paper
         player.GetComponent<PlayerMovement>().anim.SetBool("withTissue", true);
+
+        tip_paper.gameObject.SetActive(true);
+        Invoke("Tip_disappear", 2f);
     }
 
     public void GiveToiletPaper()
@@ -158,6 +167,9 @@ public class GameManager_E0 : MonoBehaviour
 
             // Change posture to holding plunger
             player.GetComponent<PlayerMovement>().anim.SetBool("withPlunge", true);
+            tip_plunge.gameObject.SetActive(true);
+
+            Invoke("Tip_disappear", 2f);
         }
     }
 
@@ -178,6 +190,13 @@ public class GameManager_E0 : MonoBehaviour
             ended = true;
 
         }
+    }
+
+    void Tip_disappear()
+    {
+        tip_plunge.gameObject.SetActive(false);
+        tip_paper.gameObject.SetActive(false);
+
     }
 
     public void Death()
