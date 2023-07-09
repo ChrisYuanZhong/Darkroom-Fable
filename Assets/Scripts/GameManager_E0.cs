@@ -95,7 +95,7 @@ public class GameManager_E0 : MonoBehaviour
     {
         if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
         {
-            if (ended=true)
+            if (ended)
             {
                 // Back to main menu
                 SceneManager.LoadScene("Ningxuan_tes");
