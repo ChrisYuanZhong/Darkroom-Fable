@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor.VersionControl;
+//using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Windows;
 using UnityEngine.UI;
@@ -41,6 +41,13 @@ public class GameManager_E0 : MonoBehaviour
     public GameObject tip_paper;
     public GameObject tip_plunge;
 
+    //“Ù–ß
+    private AudioSource source1;
+    public AudioClip sound_itemPick;
+    public AudioClip sound_doorShut;
+    public AudioClip sound_ghost;
+    public AudioClip sound_splash;
+
     public int totalFrames = 8;
     public int currentFrame = 0;
     public float frameLength = 2.4f;
@@ -77,10 +84,12 @@ public class GameManager_E0 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        source1 = GetComponent<AudioSource>();
+
         background4Original = background4.sprite;
 
-        Destroy(bubbleWithShit, 2f);
-        Invoke("EnableInput", 2f);
+        Destroy(bubbleWithShit, 1f);
+        Invoke("EnableInput", 1f);
 
         //leftTrigger.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(alwaysOnScripts, frameLength, 1);
         //rightTrigger.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(alwaysOnScripts, frameLength, 1);
@@ -139,6 +148,8 @@ public class GameManager_E0 : MonoBehaviour
         // Change posture to holding paper
         player.GetComponent<PlayerMovement>().anim.SetBool("withTissue", true);
 
+        source1.PlayOneShot(sound_itemPick, 2f);
+
         tip_paper.gameObject.SetActive(true);
         Invoke("Tip_disappear", 2f);
     }
@@ -151,6 +162,8 @@ public class GameManager_E0 : MonoBehaviour
             background3.sprite = background3NoHand;
             background4.sprite = background4WithPlunger;
         }
+
+        source1.PlayOneShot(sound_doorShut, 2f);
 
         // Change posture to normal
         player.GetComponent<PlayerMovement>().anim.SetBool("withTissue", false);
@@ -167,6 +180,8 @@ public class GameManager_E0 : MonoBehaviour
 
             // Change posture to holding plunger
             player.GetComponent<PlayerMovement>().anim.SetBool("withPlunge", true);
+            source1.PlayOneShot(sound_itemPick, 2f);
+            source1.PlayOneShot(sound_doorShut, 2f);
             tip_plunge.gameObject.SetActive(true);
 
             Invoke("Tip_disappear", 2f);
@@ -186,6 +201,7 @@ public class GameManager_E0 : MonoBehaviour
             else if (currentFrame == 1)
                 anim_success2.gameObject.SetActive(true);
 
+            source1.PlayOneShot(sound_splash);
             Destroy(player);
             ended = true;
 
@@ -202,6 +218,7 @@ public class GameManager_E0 : MonoBehaviour
     public void Death()
     {
         //animator.Failure();
+        source1.PlayOneShot(sound_ghost, 3f);
         anim_failed.gameObject.SetActive(true); 
         Destroy(player);
         ended = true;

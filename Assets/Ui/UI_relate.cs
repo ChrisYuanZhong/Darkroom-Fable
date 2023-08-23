@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class UI_relate : MonoBehaviour
 {
+    public GameObject Staff;
 
     void Start()
     {
@@ -25,6 +26,16 @@ public class UI_relate : MonoBehaviour
     public void Click_exit()
     {
         Application.Quit();
+    }
+
+    public void Click_staff()
+    {
+        Staff.SetActive(true);
+    }
+
+    public void Back_staff()
+    {
+        Staff.SetActive(false);
     }
 
 }
