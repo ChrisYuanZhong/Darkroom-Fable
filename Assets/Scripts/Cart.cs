@@ -22,6 +22,7 @@ public class Cart : MonoBehaviour
             if (isOverlapping)
             {
                 gameManager.PickUpCart();
+                GetComponent<SceneComponentAutoGen>().DestroySelf();
             }
         }
 

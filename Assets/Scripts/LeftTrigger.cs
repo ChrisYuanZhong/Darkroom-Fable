@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LeftTrigger : MonoBehaviour
 {
-    public GameManager_E0 gameManager;
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()

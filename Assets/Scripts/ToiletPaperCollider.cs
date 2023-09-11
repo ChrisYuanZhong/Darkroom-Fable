@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ToiletPaperCollider : MonoBehaviour
 {
-    public GameManager_E0 gameManager;
+    public GameManager_C1 gameManager;
 
     public bool isOverlapping = false;
 
@@ -22,6 +22,7 @@ public class ToiletPaperCollider : MonoBehaviour
             if (isOverlapping)
             {
                 gameManager.PickUpToiletPaper();
+                GetComponent<SceneComponentAutoGen>().DestroySelf();
             }
         }
 

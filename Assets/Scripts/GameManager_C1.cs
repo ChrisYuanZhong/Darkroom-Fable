@@ -7,23 +7,12 @@ using UnityEngine.Windows;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public struct ScriptPerFrame
+// Derive from GameManager
+public class GameManager_C1 : GameManager
 {
-    public ScriptPerFrame(bool i_render = true, int i_xPositionOffset = 0, int i_yPositionOffset = 0)
-    {
-        render = i_render;
-        positionOffset = new Vector2(i_xPositionOffset, i_yPositionOffset);
-    }
+    private bool holdingPaper = false;
+    private bool holdingPlunger = false;
 
-    public bool render;
-    public Vector2 positionOffset;
-
-}
-
-public class GameManager_E0 : MonoBehaviour
-{
-    public Camera mainCamera;
-    public GameObject player;
     public GameObject hand;
     public GameObject plunger;
     public GameObject ghost;
@@ -48,23 +37,9 @@ public class GameManager_E0 : MonoBehaviour
     public AudioClip sound_ghost;
     public AudioClip sound_splash;
 
-    public int totalFrames = 8;
-    public int currentFrame = 0;
-    public float frameLength = 2.4f;
-    public bool ended = false;
-
 
     //public GameObject leftTrigger;
     //public GameObject rightTrigger;
-
-    public static List<ScriptPerFrame> alwaysOnScripts = new List<ScriptPerFrame>()
-    {
-        new ScriptPerFrame(true, 0, 0),
-        new ScriptPerFrame(true, 0, 0),
-        new ScriptPerFrame(true, 0, 0),
-        new ScriptPerFrame(true, 0, 0),
-        new ScriptPerFrame(true, 0, 0),
-    };
 
     public static List<ScriptPerFrame> ghostScripts = new List<ScriptPerFrame>()
     {
@@ -95,8 +70,9 @@ public class GameManager_E0 : MonoBehaviour
         //rightTrigger.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(alwaysOnScripts, frameLength, 1);
         //floor.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(floorScripts, frameLength, 1);
         //backGround.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(backGroundScripts, frameLength, 1);
-        toiletPaper.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(toiletPaperScripts, frameLength, 1);
-        ghost.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(ghostScripts, frameLength, 1);
+        //toiletPaper.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(toiletPaperScripts, frameLength, 1);
+        //ghost.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(ghostScripts, frameLength, 1);
+        toiletPaper.GetComponent<SceneComponentAutoGen>().GenerateNextFrame(totalFrames - 1, frameLength);
     }
 
     // Update is called once per frame
@@ -113,37 +89,17 @@ public class GameManager_E0 : MonoBehaviour
         }
     }
 
-    // Move the camera smoothly using Lerp.
-
     public void EnableInput()
     {
         player.GetComponent<PlayerMovement>().enabled = true;
     }
 
-    public void MoveLeft()
-    {
-        currentFrame--;
-        mainCamera.GetComponent<CameraMovement>().MoveCamera(mainCamera.transform.position, new Vector3(mainCamera.transform.position.x - frameLength, mainCamera.transform.position.y, mainCamera.transform.position.z), 0.5f);
-
-    }
-
-    public void MoveRight()
-    {
-        currentFrame++;
-        mainCamera.GetComponent<CameraMovement>().MoveCamera(mainCamera.transform.position, new Vector3(mainCamera.transform.position.x + frameLength, mainCamera.transform.position.y, mainCamera.transform.position.z), 0.5f);
-
-
-        //floor.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(alwaysOnScripts, frameLength, currentFrame);
-        //backGround.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(alwaysOnScripts, frameLength, currentFrame);
-        //toiletPaper.GetComponent<SceneComponentAutoGen>().GenerateFollowingFrames(alwaysOnScripts, frameLength, currentFrame);
-    }
-
     public void PickUpToiletPaper()
     {
-        if (player.GetComponent<PlayerMovement>().holdingPaper)
+        if (holdingPaper)
             return;
-        toiletPaper.GetComponent<SceneComponentAutoGen>().DestroyFollowingFrames(currentFrame);
-        player.GetComponent<PlayerMovement>().holdingPaper = true;
+        //toiletPaper.GetComponent<SceneComponentAutoGen>().DestroySelf();
+        holdingPaper = true;
 
         // Change posture to holding paper
         player.GetComponent<PlayerMovement>().anim.SetBool("withTissue", true);
@@ -156,7 +112,7 @@ public class GameManager_E0 : MonoBehaviour
 
     public void GiveToiletPaper()
     {
-        if (player.GetComponent<PlayerMovement>().holdingPaper)
+        if (holdingPaper)
         {
             Destroy(hand);
             background3.sprite = background3NoHand;
@@ -174,7 +130,7 @@ public class GameManager_E0 : MonoBehaviour
     {
         if (background4.sprite == background4WithPlunger)
         {
-            player.GetComponent<PlayerMovement>().holdingPlunger = true;
+            holdingPlunger = true;
             Destroy(plunger);
             background4.sprite = background4Original;
 
@@ -190,9 +146,9 @@ public class GameManager_E0 : MonoBehaviour
 
     public void Plunge()
     {
-        if (player.GetComponent<PlayerMovement>().holdingPlunger)
+        if (holdingPlunger)
         {
-            ghost.GetComponent<SceneComponentAutoGen>().DestroyFollowingFrames(currentFrame);
+            ghost.GetComponent<SceneComponentAutoGen>().DestroySelf();
 
 
             // The End
@@ -215,7 +171,8 @@ public class GameManager_E0 : MonoBehaviour
 
     }
 
-    public void Death()
+    // Override Death() in GameManager
+    public override void Death()
     {
         //animator.Failure();
         source1.PlayOneShot(sound_ghost, 3f);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RightTrigger : MonoBehaviour
 {
-    public GameManager_E0 gameManager;
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -46,11 +46,6 @@ public class RightTrigger : MonoBehaviour
         else if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerMovement>().isShifting = false;
-
-            if (gameManager.currentFrame == gameManager.totalFrames - 1)
-            {
-                gameManager.Death();
-            }
         }
     }
 }

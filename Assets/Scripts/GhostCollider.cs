@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GhostCollider : MonoBehaviour
 {
-    public GameManager_E0 gameManager;
+    public GameManager_C1 gameManager;
 
     public bool isOverlapping = false;
 
